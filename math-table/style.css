@@ -5,11 +5,11 @@
 }
 
 body {
-    background-color: rgb(204, 146, 0);
+    background-color: rgb(144, 40, 214);
 }
 
 header {
-    color: white;
+    color: rgb(255, 255, 255);
     font-size: large;
     text-align: center;
 }
@@ -26,7 +26,6 @@ main {
 
 p {
     padding: 5px;
-    
 }
 
 footer {

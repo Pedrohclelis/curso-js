@@ -2,16 +2,23 @@
 
 * {
     font-family: sans-serif;
+    
+}
+
+input {
+    caret-color: red;
+    max-width: 7em;
 }
 
 body {
-    background-color: rgb(204, 146, 0);
+    background-color: rgb(34, 96, 211);
 }
 
 header {
-    color: white;
+    color: rgb(255, 255, 255);
     font-size: large;
     text-align: center;
+    text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.295);
 }
 
 main {
@@ -24,9 +31,12 @@ main {
     color: black;
 }
 
+select#list {
+    width: 150px;
+}
+
 p {
     padding: 5px;
-    
 }
 
 footer {
