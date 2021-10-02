@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="shortcut icon" href="models/favicon.png" type="image/x-icon">
+    <link rel="stylesheet" href="extra/style.css">
+    <title>Personal Form</title>
+</head>
+<body>
+    
+    <header>
+        <div id=head>&nbsp;</div>
+        <h1>Personal Form</h1>
+        <p>Fill with some information about yourself</p>
+        <div id='border'>&nbsp;</div>
+        <p id='header-extra'>&nbsp;</p>
+    </header>
+
+    <main>
+        <form action="" target="_blank" autocomplete="on">
+            <section>
+                <label for='id_name'>
+                    <p>Name:</p>
+                    <p class='desc'>Digit here your name</p>
+                </label>
+                <input type="text" placeholder="Your answer" id='id_name'>
+            </section>
+
+            <section>
+                <p>Telephone:</p>
+                <p class='desc'>(DDD) 9-XXXX-XXXX</p>
+                <input type="tel" placeholder="Your answer">
+            </section>
+
+            <section>
+                <p>About you</p>
+                <input type="text" class='longtext' value="" placeholder="Your answer">
+            </section>
+
+            <section>
+                <p>Your birthday date</p>
+                <input type="date" name="" id="">
+            </section>
+
+            <section>
+                <p>Hour that you have dinner</p>
+                <input type="time" name="" id="">
+            </section>
+
+            <section>
+                <p>How did you hear about this form?</p>
+                <p class='option'><input type="radio" name="hear" id='hear1'> <label for="hear1" class='option'> By a Friend</label></p>
+                <p class='option'><input type="radio" name="hear" id="hear2"> <label for="hear2" class='option'> Research for yourself</label></p>
+                <p class='option'><input type="radio" name="hear" id="hear3"> <label for="hear3" class='option'> At school</label></p>
+                <p class='option'> 
+                    <input type="radio" name="hear" id="hear4"> 
+                    <label for="other4" class='option'> Other: </label>
+                    <label for="hear4"> <input type="text" id='other4' class='longtext2'> </label>
+                </p>
+            </section>
+
+            <section>
+                <p>Select the social networks you use</p>
+                <p class='option'><input type="checkbox" name="social1" id="social1"> <label for="social1" class='option'> Whatsapp </label></p>
+                <p class='option'><input type="checkbox" name="social2" id="social2"> <label for="social2" class='option'> Facebook </label></p>
+                <p class='option'><input type="checkbox" name="social3" id="social3"> <label for="social3" class='option'> LinkedIn </label></p>
+                <p class='option'><input type="checkbox" name="social4" id="social4"> <label for="social4" class='option'> Telegram </label></p>
+                <p class='option'>
+                    <input type="checkbox" name="social" id="social5">
+                    <label for="other5" class='option'> Other: </label>
+                    <label for="social5"> <input type="text" name="" id="other5" class='longtext2'> </label>
+                </p>
+            </section>
+
+        </form>
+
+        <aside>
+            <button id='send' type='submit' onclick='send()'> Send </button>
+            <button id='clean' type='reset' onclick='clean()'> Clear Form </button>
+            
+        </aside>
+
+        <footer>
+            <span id='p'>Pedrohclelis</span> <span id='f'>Forms</span>
+        </footer>
+        
+        <script src="extra/script.js"></script>
+    </main>
+</body>
+</html>

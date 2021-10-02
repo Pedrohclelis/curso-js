@@ -33,9 +33,9 @@ function put(){
         alert.innerHTML = ''
         list.setAttribute('size', `${values.length+1}`)
     } else{
-        alert.innerHTML = '* Invalid value or already in the list!'
+        alert.innerHTML = '* Invalid value or its already in the list!'
         document.querySelector('p').appendChild(alert);
-        alert.style.color = 'red';
+        alert.style.color = '#ff0020';
         alert.style.fontSize = '10.5pt';
 
         //window.alert("Invalid value or already in the list")

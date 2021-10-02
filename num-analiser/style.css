@@ -6,12 +6,12 @@
 }
 
 input {
-    caret-color: red;
+    caret-color: #ff0020;
     max-width: 7em;
 }
 
 body {
-    background-color: rgb(34, 96, 211);
+    background-color: #0f73ad;
 }
 
 header {
@@ -29,6 +29,14 @@ main {
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.356);
     padding: 30px;
     color: black;
+}
+
+button {
+    color: rgb(255, 255, 255);
+    background-color: #438eb9;
+    border-radius: 6px;
+    border-color: #2e6280;
+
 }
 
 select#list {
