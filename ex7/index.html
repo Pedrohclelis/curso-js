@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="extra/style.css">
+    <title>Ex 7 - Lampada</title>
+
+</head>
+<body>
+    <main>
+        <h1>Exemplo com JavaScript: Lampada</h1>
+        <p>Ex 7 - Curso do Bruno Bastos</p>
+        <img src="extra/off.png" alt="lampada" id='lampada'> <br><br>
+        <button onclick='ligar()' id='on'>Ligar</button>
+        <button onclick='desligar()' id='off'>Desligar </button>
+    </main>
+
+    <script>
+        var lampada = document.getElementById('lampada')
+        function ligar(){
+            lampada.setAttribute('src', 'extra/on.png')
+        }
+        function desligar(){
+            lampada.setAttribute('src', 'extra/off.png')
+        }
+    </script>
+</body>
+</html>
