@@ -1,0 +1,44 @@
+body {
+    background-color: rgb(49, 49, 49);
+    text-align: center;
+}
+
+main {
+    background-color: rgb(232, 244, 255);
+    width: 600px;
+    margin: 0px auto 50px auto;
+
+    border-radius: 4px;
+    padding: 30px;
+}
+
+h1 {
+    color: rgb(197, 108, 7);
+    margin: 0px;
+}
+
+p {
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-size: 20px;
+    color: rgb(177, 148, 19);
+}
+
+button#on {
+    background-color: rgba(0, 185, 46, 0.226);
+    border: 3px solid rgb(0, 148, 12);
+}
+
+button#off {
+    background-color: rgba(255, 75, 75, 0.281);
+    border: 3px solid rgb(148, 0, 0);
+}
+
+button:hover {
+    box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.658);
+}
+
+button#on:active, button#off:active {
+    box-shadow: 1px 1px 5px rgb(0, 0, 0);
+    border: 3px solid rgb(0, 132, 255);
+    background-color: rgb(175, 216, 255);
+}
