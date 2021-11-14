@@ -1,0 +1,62 @@
+* {
+    margin: 0px;
+    font-family: 'Roboto';
+}
+
+body {
+    height: 100vh;
+}
+
+header {
+    padding: 10px;
+    background-color: lightgray;
+}
+
+nav {
+    display: flex;
+    justify-content: space-between;
+    align-items: center
+}
+
+span {
+    margin: 10px;
+}
+
+button {
+    border: 0px;
+    font-size: 14px;
+    font-weight: 600;
+    color: rgb(255, 255, 255);
+    background-color: rgb(17, 21, 255);
+    border-radius: 4px;
+    padding: 8.5px 24px 8.5px 24px;
+}
+
+main {
+    background-color: rgb(255, 255, 255);
+}
+
+.galery{
+
+    margin: 50px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.8rem;
+    justify-content: center;
+
+}
+
+img{
+    width: 30%;
+    height: auto;
+    border: 2px solid rgb(77, 77, 77);
+}
+
+footer{
+    background-color: purple; 
+    text-align: center;
+    padding: 5px;
+    margin-top: 15vh;
+    flex: 1;
+    color: white;
+}

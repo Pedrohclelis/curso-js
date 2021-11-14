@@ -10,6 +10,7 @@
 
 body {
     background-color: rgb(54, 151, 54);
+    height: 100vh;
 }
 
 input {
@@ -44,6 +45,10 @@ main {
     border-radius: 7px;
     box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.356);
     padding: 20px;
+}
+
+#painel {
+    margin: 25% auto 25% auto;
 }
 
 p {
