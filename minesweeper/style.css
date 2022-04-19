@@ -1,0 +1,28 @@
+
+
+td:hover {
+    background-color: green;
+}
+
+td::after {
+    background-color: red;
+}
+
+.hidden {
+    width: 32px;
+    height: 32px;
+    z-index: 1;
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;    /* X axis */
+    align-items: center;  /* Y axis */
+
+    border: 1px solid red;
+}
+
+h1 {
+   text-align: center;
+}

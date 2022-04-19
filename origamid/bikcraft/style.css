@@ -1,0 +1,48 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.nav {
+    background-color: #fec63e;
+    
+}
+
+.img {
+    max-width: 100%;
+}
+
+.nav-menu {
+    max-width: 950px;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+    align-items: center;
+    margin: auto;
+}
+
+.logo {
+    display: inline;
+}
+
+ul {
+    display: flex;
+    gap: 40px;
+}
+
+li {
+    list-style: none;
+    font-size: 14px;
+    font-weight: bold;
+    color: black;
+}
+
+a {
+    text-decoration: none;
+}
+
+li:hover {
+    transition: all .4s ease;
+    color: white;
+}
