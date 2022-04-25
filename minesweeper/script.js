@@ -56,7 +56,6 @@ function sortNumber(){
     return Math.floor(Math.random() * (max - min)) + min;
 }
 
-
 function setMines(amount){
     var count = 0
     while (count < amount){
@@ -66,37 +65,41 @@ function setMines(amount){
             for (var j=0; j<boardLength; j++){
                 //for each field, if his cordinates is equal to sorted mine coords, and this field isnt a mine yet, put here a mine
                 if ((i == mineLine && j == mineColumn) && (board[i][j].id != -1)){
-                    board[i][j].id = -1
+                    board[mineLine][mineColumn].id = -1
                     count += 1
-                    //for each 9 fields around mine...
-                    for (var k=mineLine-1; k<=mineLine+1; k++){
-                        for (var l=mineColumn-1; l<=mineColumn+1; l ++){
-                            //if exists, and isnt the original mine field, neither other mine field, set his id to +1 to sinalize the original mine
-                            if ( ((k >= 0) && (k < boardLength) && (l >= 0) && (l < boardLength)) && !(k == mineLine && l == mineColumn) && (board[k][l].id != -1) )
-                                board[k][l].id += 1
-                        }
-                    }
+                    setNumbersAround(mineLine, mineColumn)
                 }
             }
         }
     }
 }
 
-function printBoard2(){
+function setNumbersAround(mineLine, mineColumn){
+    //for each 9 fields around mine...
+    for (var k=mineLine-1; k<=mineLine+1; k++){
+        for (var l=mineColumn-1; l<=mineColumn+1; l++){
+            //if exists, and isnt the original mine field, neither other mine field, set his id to +1 to sinalize the original mine
+            if ( ((k >= 0) && (k < boardLength) && (l >= 0) && (l < boardLength)) && !(k == mineLine && l == mineColumn) && (board[k][l].id != -1) )
+                board[k][l].id += 1
+        }
+    }
+}
+
+function cluedBoard(){
     for (var i=0; i<boardLength; i++){
         for (var j=0; j<boardLength; j++){
             if (board[i][j].id == -1){
-                document.querySelector('div').innerHTML += `[~] `
+                document.querySelector('div.test').innerHTML += `[~] `
             } else{
-                document.querySelector('div').innerHTML += `[${board[i][j].id}] `
+                document.querySelector('div.test').innerHTML += `[${board[i][j].id}] `
             }
         }
-        document.querySelector('div').innerHTML += " - "
-        document.querySelector('div').innerHTML += `[${i}]`
-        document.querySelector('div').innerHTML += `<br>`
+        document.querySelector('div.test').innerHTML += " - "
+        document.querySelector('div.test').innerHTML += `[${i}]`
+        document.querySelector('div.test').innerHTML += `<br>`
     }
-    document.querySelector('div').innerHTML += `<br>`
-    document.querySelector('div').innerHTML += `<br>`
+    document.querySelector('div.test').innerHTML += `<br>`
+    document.querySelector('div.test').innerHTML += `<br>`
 }
 
 function printBoard(){
@@ -112,12 +115,20 @@ function printBoard(){
 
             //Setting img 'src' (and 'alt') atribute based on matrix data
             setImg(img, i, j)
-            img.setAttribute("width", "32px")
+
             cell.classList.add("hidden")
 
             //Putting the <img> inside the <td> cell
             cell.appendChild(img)
         }
+    }
+}
+
+function removeBoard(){
+    for (var i=0; i<boardLength; i++){
+        //Insert a row <tr> for each line
+        var row = document.querySelectorAll('tbody tr')
+        row[0].remove()
     }
 }
 
@@ -141,8 +152,9 @@ function if0(line, col){
 
 setBoard()
 setMines(10)
-printBoard2()
+cluedBoard()
 printBoard()
+
 
 //onClick function for each <img> inside a <td> (arrayed in a NodeList) 
 document.querySelectorAll('td img').forEach(function (e, index){
@@ -150,21 +162,30 @@ document.querySelectorAll('td img').forEach(function (e, index){
     var line = Math.floor(index / boardLength)
     var col = parseInt(index % boardLength)
     
-
     //Normal click, reveal field
     e.onclick  = function(){
         console.log(`Line: ${line} - Column: ${col} - Alt: ${e.alt} - Src: ${e.src}`)
         //CSS to remove class
         e.classList.remove("hidden")
 
-        //Execute only when the field is undiscovered
-        if (board[line][col].visible == false){
-            //Organize the board matrix, saying that field is visible now
-            board[line][col].visible = true
-            //Change 'undiscovered' img to his related id, based on board matrix
-            setImg(e, line, col)
-            //if '0' field, then reveal other 9 field around him in a recursive loop 
-            if0(line, col)
+        //If its flag, prevents wrong click, removing flag first
+        if(e.alt == "flag"){
+            e.src = "assets/undiscovered.png"
+            e.alt = "undiscovered"
+        } else{
+            //Execute only when the field is undiscovered
+            if (board[line][col].visible == false){
+                //Organize the board matrix, saying that field is visible now
+                board[line][col].visible = true
+                
+                //Change 'undiscovered' img to his related id, based on board matrix
+                setImg(e, line, col)
+                //if '0' field, then reveal other 9 field around him in a recursive loop 
+                if0(line, col)
+                if (board[line][col].id == -1){
+                    loseGame(e, line, col)
+                }
+            }
         }
     }
 
@@ -172,10 +193,42 @@ document.querySelectorAll('td img').forEach(function (e, index){
     e.addEventListener("contextmenu", function(el){
         el.preventDefault()
         if (board[line][col].visible == false){
-            e.src = "assets/flag.png"
-            e.alt = "flag"
-        }
-        console.log('Flag placed')
+            if (e.alt == "undiscovered"){
+                e.src = "assets/flag.png"
+                e.alt = "flag"
+            } else if(e.alt == "flag"){
+                e.src = "assets/undiscovered.png"
+                e.alt = "undiscovered"
+            }
+        }    
     })
 })
 
+function loseGame(e, line, col){
+    showBombs()
+    e.src = "assets/mine-red.png"
+    e.alt = "mine-red"
+    window.alert('You lose')
+}
+
+function showBombs(){
+    for (i=0; i<boardLength; i++){
+        for(j=0; j<boardLength; j++){
+            if (board[i][j].id == -1){
+                board[i][j].visible = true
+                var nodeIndex = boardLength*i + j
+                setImg(document.querySelectorAll('td img')[nodeIndex], i, j)
+            }
+        }
+    }
+}
+
+tabel = document.querySelector('table')
+tabel.onclick = verify
+function verify(event){
+    //cell = td img
+    var cell = event.target
+    var line = cell.parentNode.parentNode.rowIndex;
+    var col = cell.parentNode.cellIndex;
+    console.log(`--- Line: ${line} - Column: ${col} - Alt: ${cell.alt} - Src: ${cell.src}`)
+}
