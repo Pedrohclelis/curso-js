@@ -14,6 +14,7 @@ function setBoard(){
 function setImg(element, line, col){
     if (board[line][col].visible == false){
         element.src = "assets/undiscovered.png"
+        element.classList.add("undiscovered")
         element.alt = "undiscovered"
     } else{
         switch(board[line][col].id){
@@ -47,7 +48,6 @@ function setImg(element, line, col){
                 break
         }
     }
-    
 }
 
 function sortNumber(){
@@ -116,8 +116,6 @@ function printBoard(){
             //Setting img 'src' (and 'alt') atribute based on matrix data
             setImg(img, i, j)
 
-            cell.classList.add("hidden")
-
             //Putting the <img> inside the <td> cell
             cell.appendChild(img)
         }
@@ -132,7 +130,7 @@ function removeBoard(){
     }
 }
 
-function if0(line, col){
+function clearFields(line, col){
     if (board[line][col].id == 0){
         //for each 9 fields around '0'...
         for (var k=line-1; k<=line+1; k++){
@@ -143,7 +141,7 @@ function if0(line, col){
                     var nodeIndex = boardLength*k + l
                     setImg(document.querySelectorAll('td img')[nodeIndex], k, l)
                     //Recursive for others 0 around that remain undiscovered yet
-                    if0(k, l)
+                    clearFields(k, l)
                 }
             }
         }
@@ -156,60 +154,6 @@ cluedBoard()
 printBoard()
 
 
-//onClick function for each <img> inside a <td> (arrayed in a NodeList) 
-document.querySelectorAll('td img').forEach(function (e, index){
-    //Picking the related line and col, based on img position known by the node array index. Extra info on log
-    var line = Math.floor(index / boardLength)
-    var col = parseInt(index % boardLength)
-    
-    //Normal click, reveal field
-    e.onclick  = function(){
-        console.log(`Line: ${line} - Column: ${col} - Alt: ${e.alt} - Src: ${e.src}`)
-        //CSS to remove class
-        e.classList.remove("hidden")
-
-        //If its flag, prevents wrong click, removing flag first
-        if(e.alt == "flag"){
-            e.src = "assets/undiscovered.png"
-            e.alt = "undiscovered"
-        } else{
-            //Execute only when the field is undiscovered
-            if (board[line][col].visible == false){
-                //Organize the board matrix, saying that field is visible now
-                board[line][col].visible = true
-                
-                //Change 'undiscovered' img to his related id, based on board matrix
-                setImg(e, line, col)
-                //if '0' field, then reveal other 9 field around him in a recursive loop 
-                if0(line, col)
-                if (board[line][col].id == -1){
-                    loseGame(e, line, col)
-                }
-            }
-        }
-    }
-
-    //Right click, put flag instead of default contextmenu
-    e.addEventListener("contextmenu", function(el){
-        el.preventDefault()
-        if (board[line][col].visible == false){
-            if (e.alt == "undiscovered"){
-                e.src = "assets/flag.png"
-                e.alt = "flag"
-            } else if(e.alt == "flag"){
-                e.src = "assets/undiscovered.png"
-                e.alt = "undiscovered"
-            }
-        }    
-    })
-})
-
-function loseGame(e, line, col){
-    showBombs()
-    e.src = "assets/mine-red.png"
-    e.alt = "mine-red"
-    window.alert('You lose')
-}
 
 function showBombs(){
     for (i=0; i<boardLength; i++){
@@ -224,11 +168,73 @@ function showBombs(){
 }
 
 tabel = document.querySelector('table')
-tabel.onclick = verify
-function verify(event){
-    //cell = td img
+tabel.onclick = revealField
+tabel.oncontextmenu = flagField
+
+function flagField(event){
+    //Remove default menu at right click
+    event.preventDefault()
+
     var cell = event.target
     var line = cell.parentNode.parentNode.rowIndex;
     var col = cell.parentNode.cellIndex;
-    console.log(`--- Line: ${line} - Column: ${col} - Alt: ${cell.alt} - Src: ${cell.src}`)
+  
+    if (board[line][col].visible == false){
+        if (cell.className == "undiscovered"){
+            cell.className = "flag"
+            cell.src = "assets/flag.png"
+            cell.alt = "flag"
+        } else if (cell.className == "flag"){
+            cell.className = "undiscovered"
+            cell.src = "assets/undiscovered.png"
+            cell.alt = "undiscovered"
+        }
+    }
 }
+
+function revealField(event){
+    //cell == td > img == one field
+    var cell = event.target
+    var line = cell.parentNode.parentNode.rowIndex;
+    var col = cell.parentNode.cellIndex;
+    console.log(`Line: ${line} - Column: ${col} - Alt: ${cell.alt} - Src: ${cell.src}`)
+
+    //Execute only when the field hasnt a flag in it
+    if (cell.classList.contains("flag") == false){
+        //Organize the 'board' matrix, saying that field is visible now
+        board[line][col].visible = true
+
+        //Change 'undiscovered' img to his related id, based on 'board' matrix
+        setImg(cell, line, col)
+        
+        switch (board[line][col].id){
+            case -1:
+                loseGame(cell, line, col)
+                break
+            case 0:
+                clearFields(line, col)
+                break
+        }
+    }
+}
+
+function timerHUD(){
+    timer = document.querySelector('.timer')
+    const timerInterval = setInterval(incrementSeconds, 1000);
+    var seconds = 0;
+    function incrementSeconds() {
+        seconds += 1;
+        timer.innerHTML = seconds;
+    }
+}
+//missing stop timer when lose game
+
+function loseGame(e, line, col){
+    showBombs()
+    e.src = "assets/mine-red.png"
+    e.alt = "mine-red"
+    window.alert('You lose')
+    
+}
+
+timerHUD()
