@@ -3,10 +3,6 @@ body {
     background-color: #e6e6e6;
 }
 
-td:hover {
-    background-color: green;
-}
-
 td::after {
     background-color: red;
 }
@@ -54,4 +50,8 @@ td img {
     border-right: 10px solid #808080;
     border-bottom: 10px solid #808080;
     padding: 20px;
+}
+
+td img:hover{
+    background-image: url("assets/undiscovered.png");
 }
