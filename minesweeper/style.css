@@ -1,10 +1,7 @@
 
 body {
-    background-color: #e6e6e6;
-}
-
-td::after {
-    background-color: red;
+    background-color: #252526;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
 
 .container {
@@ -12,13 +9,13 @@ td::after {
     flex-direction: column;
     justify-content: center;    /* X axis */
     align-items: center;  /* Y axis */
-
-    border: 1px solid red;
     margin: auto;
 }
 
 h1 {
-   text-align: center;
+    
+    text-align: center;
+    color: white;
 }
 
 table {
@@ -30,6 +27,10 @@ table {
 }
 
 .hud {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
     border-top: 10px solid #808080;
     border-left: 10px solid #808080;
     border-right: 10px solid #ffffff;
@@ -41,6 +42,11 @@ table {
 
 td img {
     width: 64px;
+    user-select: none; /*disable select imagems */
+    -moz-user-select: none;
+    -webkit-user-drag: none;
+    -webkit-user-select: none;
+    -ms-user-select: none;
 }
 
 .general {
@@ -52,6 +58,37 @@ td img {
     padding: 20px;
 }
 
-td img:hover{
-    background-image: url("assets/undiscovered.png");
+.undiscovered.hover {
+    content: url("assets/hover.png");
 }
+
+.undiscovered.pressioned {
+    content: url("assets/0.png");
+}
+
+footer {
+    color: white;
+    text-align: center;
+}
+
+a {
+    color: white;
+    font-style: italic;
+}
+
+a:visited {
+    color: white;
+}
+
+@media only screen and (max-width: 700px) {
+    body {
+      zoom: 75%;
+    }
+  }
+
+  
+@media only screen and (max-width: 500px) {
+    body {
+      zoom: 60%;
+    }
+  }

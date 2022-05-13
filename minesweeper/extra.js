@@ -170,6 +170,8 @@ const endGame = {
     }
 }
 
+var minecounter = document.querySelector('.mine-counter')
+minecounter.innerHTML = minesAmount
 function flagField(event){
     //Remove default menu at right click
     event.preventDefault()
@@ -182,11 +184,15 @@ function flagField(event){
         cell.className = "flag"
         cell.src = "assets/flag.png"
         cell.alt = "flag"
+        PuttedFlags++
     } else if (cell.classList.contains("flag")){
         cell.className = "undiscovered"
         cell.src = "assets/undiscovered.png"
         cell.alt = "undiscovered"
+        PuttedFlags--
     }
+
+    minecounter.innerHTML = `${minesAmount-PuttedFlags}`
 }
 
 function revealField(event){
@@ -198,6 +204,8 @@ function revealField(event){
     } else{
         return false
     }
+    
+
     //Execute only when the field hasnt a flag in it
     if (cell.classList.contains("flag") == false){
         //Change 'undiscovered' img to his related id, based on 'board' matrix
@@ -206,18 +214,43 @@ function revealField(event){
         //Special cases for id=0 or id=1
         switch (board[line][col]){
             case -1:
-                endGame.lose(cell)
-                break
+                if (firstClick == true){
+                    //Prevent to lose game in first click, but cause the feeling that the field isnt clicked
+                    resetBoard()
+                    cell.src = "assets/happy.png"
+                    return
+                } else{
+                    endGame.lose(cell)
+                    break
+                }
             case 0:
                 clearFields(line, col)
                 break
         }
+        firstClick = false
     }
     endGame.win()
 }
 
+/*function timerHUD(){
+    timer = document.querySelector('.timer')
+    const timerInterval = setInterval(incrementSeconds, 1000);
+    var seconds = 0;
+    function incrementSeconds() {
+        seconds += 1;
+        timer.innerHTML = seconds;
+    }
+}*/
+//missing: stop timer when lose game
+
+
+
+
 function initGame(){
     emoji.src = "assets/happy.png"
+    minecounter.innerHTML = `${minesAmount}`
+    PuttedFlags = 0
+    firstClick = true
     table.onclick = revealField
     table.oncontextmenu = flagField
     emoji.onclick = () => {removeBoard(); initGame()}
@@ -254,8 +287,9 @@ function initGame(){
     //Start functions
     setBoard()
     setMines(minesAmount)
+    cluedBoard()
     printBoard()
+    timerHUD()
 }
-
 
 initGame()
